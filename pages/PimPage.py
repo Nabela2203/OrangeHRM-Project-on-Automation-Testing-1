@@ -10,6 +10,7 @@ class PimPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    # Locators in PimPage
     pim_menu_xpath = "//span[text()='PIM']"
     add_button_xpath = "//div[@class='orangehrm-header-container']//button"
     first_name_field_name = "firstName"
@@ -26,51 +27,51 @@ class PimPage(BasePage):
     trash_icon_xpath = "(//i[@class='oxd-icon bi-trash'])"
     yes_delete_button_xpath = "//button[normalize-space()='Yes, Delete']"
 
-    def click_pim_menu(self):
+    def click_pim_menu(self):   # To click PIM menu
         self.element_click("pim_menu_xpath", self.pim_menu_xpath)
 
-    def click_add_button(self):
+    def click_add_button(self):  # To click add button
         self.element_click("add_button_xpath", self.add_button_xpath)
 
-    def enter_all_fields_click_save(self, firstname, lastname, emp_id):
+    def enter_all_fields_click_save(self, firstname, lastname, emp_id):  # Enter first name, lase name, ID and click save
         self.type_into_element(firstname, "first_name_field_name", self.first_name_field_name)
         self.type_into_element(lastname, "last_name_field_name", self.last_name_field_name)
         self.type_into_element(emp_id, "emp_id_field_xpath", self.emp_id_field_xpath)
         self.element_click("save_button_xpath", self.save_button_xpath)
 
-    def click_employee_list(self):
+    def click_employee_list(self):  # To click Employee List
         self.element_click("employee_list_header_link_text", self.employee_list_header_link_text)
 
-    def enter_firstname_click_search(self, text):
+    def enter_firstname_click_search(self, text):  # Enter first name and click search
         WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, self.employee_name_field_xpath)))
         self.type_into_element(text, "employee_name_field_xpath", self.employee_name_field_xpath)
         WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((By.XPATH, self.search_button_xpath)))
         self.element_click("search_button_xpath", self.search_button_xpath)
 
-    def check_actual_record_found(self, exp_record_found):
+    def check_actual_record_found(self, exp_record_found):  # To retrieve actual text
         WebDriverWait(self.driver, 15).until(EC.text_to_be_present_in_element((By.XPATH, self.number_of_record_found_xpath), exp_record_found))
         return self.get_element("number_of_record_found_xpath", self.number_of_record_found_xpath).text
 
-    def click_to_edit_emp_first_name(self):
+    def click_to_edit_emp_first_name(self):  # To click first name to edit
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.edit_emp_first_name_xpath)))
         self.element_click("edit_emp_first_name_xpath", self.edit_emp_first_name_xpath)
 
-    def enter_first_name(self, firstname):
+    def enter_first_name(self, firstname):  # Enter First name
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.NAME, self.first_name_field_name)))
         element = self.get_element("first_name_field_name", self.first_name_field_name)
         ActionChains(self.driver).move_to_element(element).click(element).perform()
         element.send_keys(firstname)
 
-    def click_edit_save_button(self):
+    def click_edit_save_button(self):  # click save button
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.edit_save_button_xpath)))
         self.element_click("edit_save_button_xpath", self.edit_save_button_xpath)
 
-    def retrieve_first_name(self):
+    def retrieve_first_name(self):  # To retrieve first name
         return self.get_element("retrieve_first_name_xpath", self.retrieve_first_name_xpath).text
 
-    def click_delete(self):
+    def click_delete(self):  # To click trash icon
         self.element_click("trash_icon_xpath", self.trash_icon_xpath)
         self.element_click("yes_delete_button_xpath", self.yes_delete_button_xpath)
 
-    def refresh_page(self):
+    def refresh_page(self):  # To refresh the page
         self.driver.refresh()
